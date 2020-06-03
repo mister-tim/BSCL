@@ -1,0 +1,18 @@
+<div>
+    Enter Upcoming Schedule info below, up to 512 characters.<br/>
+    <textarea id="Editor" rows="10" cols="50" name ="update" form="updoot"></textarea>
+    <form id="updoot" method="POST" action="./scripts/updateSchedule.php">
+        <button type="submit" name="go">Submit Changes</button>
+    </form>
+</div>
+<script>
+    showCurrent();
+    function showCurrent(){
+        if(!localStorage.getItem("Schedule")){
+            document.getElementById("Editor").innerText = "Enter Schedule Info Here.";
+        } else{
+            let oldSchedule = JSON.parse(localStorage.getItem("Schedule"));
+            document.getElementById("Editor").innerText = oldSchedule;
+        }
+    }
+</script>

@@ -1,0 +1,111 @@
+<html>
+    <body>
+        <div>
+            <div id="modal">
+                <div id="modal_content">
+                    <h2>Are you sure you'd like to delete the selected rows?</h2>
+                    <button onclick="submit()">Continue</button>  <button onclick="modal()">Cancel</button>
+                </div>
+            </div>
+            <h1>Select any number of rows to delete</h1>
+            <div id="dom">
+                <table id="display">
+                    <tr>
+                        <th>Row #</th>
+                        <th>Date</th>
+                        <th>Schools</th>
+                        <th>Player A</th>
+                        <th>Score A</th>
+                        <th>Player B</th>
+                        <th>Score B</th>
+                        <th>Select</th>
+                    </tr> 
+                </table>
+            </div>
+            <button onclick="go()">Submit</button>
+        </div>
+    </body>
+</html>
+<script>
+    var selected = []
+    var Listing = document.getElementById("display");
+    for(let i = 0; i<GList.length; i++){
+        let row = document.createElement("tr");
+        for(let ii = 0; ii<GList[i].length;ii++){
+            let cell = document.createElement("td");
+            cell.innerText = GList[i][ii];
+            row.appendChild(cell);
+        }
+        let Del = document.createElement("input");
+        Del.type = "checkbox";
+        Del.value = GList[i][0];
+        row.appendChild(Del);
+        Listing.appendChild(row);
+    }
+    document.getElementById("dom").appendChild(Listing);
+
+    function go(){
+        
+        for(let i = 1; i<Listing.children.length; i++){
+            if(Listing.children[i].children[7].checked){
+                selected.push(Listing.children[i].children[7].value);
+            }
+        }
+        modal();
+
+    }
+    function submit(){
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "http://www.BuffaloScholasticChessLeague.com/admin/scripts/delete.php");
+        xhttp.send(JSON.stringify(selected));
+        xhttp.onreadystatechange = function(){
+            var answer = xhttp.response;        
+            if(answer=="Green"){
+                window.location = "http://www.BuffaloScholasticChessLeague.com/admin/success.php"
+            } else{
+                console.log(answer);
+            }
+        }
+    }
+    function modal(){
+        let modal = document.getElementById("modal");
+        if(modalopen){
+            modal.style = "display: none;";
+            modalopen = false;
+        } else{
+            modal.style = "display: block;";
+            modalopen = true;
+        }
+    }
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("modal")) {
+        modal();
+        }
+    }
+</script>
+<style>
+    table, tr, th, td{
+    border: 1px black solid;
+    border-collapse: collapse;
+    }
+    table{
+        display: table;
+        table-layout: fixed;
+    }
+    #modal{
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+    #modal_content{
+        background-color: white;
+        margin: 15% auto;
+        width: 80%;
+        text-align: center;
+        padding: 20px;
+    }
+</style>

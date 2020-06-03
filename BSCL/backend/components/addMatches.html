@@ -1,0 +1,57 @@
+<html>
+    <body>
+        <h1>Submit Matches</h1>
+        <p>You may submit any number of games at once, so long as they all share the same meet date.<br/>
+        Submit game data in the following format, seperating data with ';' and '|':<br/>
+        Student A Name;Student A Score;Student B Name;Student B Score|</p>
+        <hr/>
+        <div>
+            Date:
+            <input type="date" id="day">
+        </div>
+        <hr/>
+        School Match-Ups:<br/>
+        <div id="dom">
+            <div id="match" style="border: 1px solid black; width:min-content; padding: 2px;">
+                <p>School Names:</p>
+                <input type="text" style="padding-right: 3px;" placeholder="School A">
+                <input type="text" style="padding-left: 3px;" placeholder="School B">
+                <p>Game Data:</p>
+                <textarea rows="10" cols="50" placeholder="i.e. 'Fred Bard;0;James Chunk;10|Bill Barton;9;Eve Bartlett;0|'"></textarea>
+            </div>
+            <!-- Render Here -->
+        </div>
+        <button onclick="addMatch()">Add Match-Up</button><br/>
+        <button onclick="submit()">Submit</button>
+    </body>
+</html>
+<script>
+    function addMatch(){
+        let Match = document.getElementById("match").cloneNode(true);
+        Match.children[1].value = Match.children[2].value = Match.children[4].value = "";
+        document.getElementById("dom").appendChild(Match);
+    }
+    function submit(){
+        let Meet = [];
+        Meet.push(document.getElementById("day").value);
+        for(let i = 0; i<document.getElementById("dom").children.length;i++){
+            let matchup = [];
+            matchup.push(document.getElementById("dom").children[i].children[1].value);
+            matchup.push(document.getElementById("dom").children[i].children[2].value);
+            matchup.push(document.getElementById("dom").children[i].children[4].value);
+            Meet.push(matchup);
+        }
+        console.log(Meet);
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "http://www.BuffaloScholasticChessLeague.com/admin/scripts/add.php");
+        xhttp.send(JSON.stringify(Meet));
+        xhttp.onreadystatechange = function(){
+            var answer = xhttp.response;        
+            if(answer=="Green"){
+                window.location = "http://www.BuffaloScholasticChessLeague.com/admin/success.php"
+            } else{
+                console.log(answer);
+            }
+        }
+    }
+</script>

@@ -1,0 +1,65 @@
+body{
+    background-color:#acb9ca;
+    text-align: center;
+}
+h1 { 
+    font-weight: normal; 
+    font-style: normal; 
+}
+h2{
+    text-decoration: underline;
+}
+table, tr, td{
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+table{
+    display: table;
+    width: 80%;
+    table-layout: fixed;
+}
+#day{
+    margin-left: 10%;
+    margin-bottom: 5%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto auto;
+    justify-content: space-evenly;
+    row-gap: 3%;
+}
+#tot{
+    grid-column-start: 1;
+    grid-column-start: 2;
+}
+#MLday table{
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 2%;
+}
+#MSday table{
+    width: 90%;
+    margin-bottom: 2%;
+    margin-left: 5%;
+}
+#bca{
+    width: 400px;
+    height: 400px;
+}
+#CCA{
+    background-color: #07357d;
+}
+#St_Gregs{
+    background-color: #c00000;
+}
+#Park{
+    background-color: #833c0b;
+}
+#ParkB{
+    background-color: #833c0b;
+}
+#Nichols{
+    background-color: #385623;
+}
+#Pioneer{
+    background-color: #a8d08d;
+}
